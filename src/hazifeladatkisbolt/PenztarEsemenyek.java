@@ -1,11 +1,14 @@
 package hazifeladatkisbolt;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PenztarEsemenyek {
     private Arucikk aru;
@@ -41,9 +44,11 @@ public class PenztarEsemenyek {
             }
         } 
     }
+
     public boolean getKeszVagyok(){
         return keszVagyok;
     }
+
     public String hiba(){
         return this.hiba;
     }
@@ -132,4 +137,23 @@ public class PenztarEsemenyek {
             hiba = "Nincs meg a file.";
         }        
     } 
+
+    public void vasarlasiOsszegekKiirasa(){
+        try {
+            BufferedWriter iro = new BufferedWriter(new FileWriter("osszeg.txt"));
+            int i = 1;
+            String sor;
+            for (Penztar fizetes : penztarNaplo){
+                sor = Integer.toString(++i);
+                sor += ": ";
+                sor += Integer.toString(fizetes.getVegosszeg());
+                iro.write(sor);
+                iro.newLine();
+                iro.flush();
+        }
+
+        } catch (IOException ex) {
+            Logger.getLogger(PenztarEsemenyek.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

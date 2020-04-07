@@ -13,6 +13,7 @@ public class Kosar {
         return arucikkek;
     }
     
+    
     public void kosarbaHelyez(Arucikk arucikk){
         if (arucikk.getKeszVagyok())
             arucikkek.add(arucikk);

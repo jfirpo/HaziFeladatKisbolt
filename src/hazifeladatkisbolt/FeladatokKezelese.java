@@ -3,7 +3,7 @@ package hazifeladatkisbolt;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class FeladatokKezelese {
+public final class FeladatokKezelese {
     private PenztarEsemenyek pe = new PenztarEsemenyek();;    
     private Scanner kb = new Scanner(System.in);                                    // a 4. feladat bekeres peldanya es valtozoi
     private int vasarlasSorszama;
@@ -11,12 +11,7 @@ public class FeladatokKezelese {
     private int darabszam;
 
     public FeladatokKezelese() {
-        if (pe.getKeszVagyok())
-            gyerunk();
-        else System.out.println(pe.hiba());
-    }
-    
-    public void gyerunk(){
+      if (pe.getKeszVagyok()){
         System.out.println("2. feladat");
         System.out.println("A fizetesek szama: " + pe.getPenztarNaplo().size());
         System.out.println();
@@ -27,6 +22,7 @@ public class FeladatokKezelese {
         System.out.println();
         System.out.println("4. feladat");
         System.out.print("Kerem adja meg a vasarlas sorszamat: ");
+ 
         try{
             vasarlasSorszama = kb.nextInt();}
         catch (InputMismatchException in){
@@ -40,7 +36,7 @@ public class FeladatokKezelese {
             darabszam = kb.nextInt();}
         catch (InputMismatchException in){
             }
-
+        kb.close();
         System.out.println();
         System.out.println("5. feladat");
         if (pe.getArucikkElsoVasarlsa(arucikkNeve) > 0)
@@ -56,5 +52,8 @@ public class FeladatokKezelese {
         System.out.println();
         System.out.println("7. feladat");
         pe.adottVasrarlasTermekei(vasarlasSorszama);
+        pe.vasarlasiOsszegekKiirasa();
+      }
+        else System.out.println(pe.hiba());
     }
 }
