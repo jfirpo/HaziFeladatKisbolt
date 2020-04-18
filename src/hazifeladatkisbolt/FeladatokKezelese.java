@@ -1,59 +1,77 @@
 package hazifeladatkisbolt;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public final class FeladatokKezelese {
-    private PenztarEsemenyek pe = new PenztarEsemenyek();;    
-    private Scanner kb = new Scanner(System.in);                                    // a 4. feladat bekeres peldanya es valtozoi
-    private int vasarlasSorszama;
-    private String arucikkNeve;
-    private int darabszam;
+public class FeladatokKezelese {
+    private PenztariEsemenykezelo penztariEsemenyek = new PenztarEsemenyek();;    
+    private Scanner keyboardReader = new Scanner(System.in);                                    // a 4. feladat bekeres penztariEsemenyekldanya es valtozoi
+    private int vasarlasSorszama = 2;
+    private String arucikkNeve = "colostok";
+    private int darabszam = 2;
+    private final int ELSOVASARLO = 1;
 
     public FeladatokKezelese() {
-      if (pe.getKeszVagyok()){
+        
+    }
+    
+    public void feladat2(){
         System.out.println("2. feladat");
-        System.out.println("A fizetesek szama: " + pe.getPenztarNaplo().size());
-        System.out.println();
+        System.out.println("A fizetesek szama: " + penztariEsemenyek.vasarlasOsszesen());        
+        System.out.println();    
+    }
+    
+    public void feladat3(){
         System.out.println("3. feladat");
-        System.out.print("Az elso vasarlo ");
-        System.out.print(pe.getPenztarNaplo().get(0).getKosar().getArucikkek().size());
+        System.out.print("Az " + ELSOVASARLO + ". vasarlo ");
+        System.out.print(penztariEsemenyek.megadottVasarlasKosarMeret(ELSOVASARLO));
         System.out.println(" db termeket vasarolt.");
-        System.out.println();
+        System.out.println();    
+    }
+    
+    public void feladat4(){
         System.out.println("4. feladat");
         System.out.print("Kerem adja meg a vasarlas sorszamat: ");
- 
+        /*
         try{
-            vasarlasSorszama = kb.nextInt();}
+            vasarlasSorszama = keyboardReader.nextInt();}
         catch (InputMismatchException in){
             }
         
         System.out.print("Kerem adja meg az arucikk nevet: ");
-            arucikkNeve =  kb.next();
+            arucikkNeve =  keyboardReader.next();
 
             System.out.print("Kerem adja meg a darabszamot: ");
         try{            
-            darabszam = kb.nextInt();}
+            darabszam = keyboardReader.nextInt();}
         catch (InputMismatchException in){
             }
-        kb.close();
-        System.out.println();
-        System.out.println("5. feladat");
-        if (pe.getArucikkElsoVasarlsa(arucikkNeve) > 0)
-            System.out.println("Az elso vasarlas sorszama: " + pe.getArucikkElsoVasarlsa(arucikkNeve));
-        else System.out.println("Nincs ilyen termek.");
-        if (pe.getArucikkElsoVasarlsa(arucikkNeve) > 0)
-            System.out.println("Az utolso vasarlas sorszama: " + pe.getArucikkUtolsoVasarlsa(arucikkNeve));
-        else System.out.println("Nincs ilyen termek.");
-        System.out.println("Eladott darabszam: " + pe.eladottTermekSzam(arucikkNeve));
-        System.out.println();
-        System.out.println("6. feladat");
-        System.out.println(darabszam + " darab vetelekor fizetendo: " + pe.mennybeKerulXDarab(darabszam));
-        System.out.println();
-        System.out.println("7. feladat");
-        pe.adottVasrarlasTermekei(vasarlasSorszama);
-        pe.vasarlasiOsszegekKiirasa();
-      }
-        else System.out.println(pe.hiba());
+        keyboardReader.close();
+        */
+        System.out.println();    
     }
+    
+    public void feladat5(){
+        System.out.println("5. feladat");
+        if (penztariEsemenyek.getArucikkElsoVasarlsa(arucikkNeve) > 0)
+            System.out.println("Az elso vasarlas sorszama: " + penztariEsemenyek.getArucikkElsoVasarlsa(arucikkNeve));
+        else System.out.println("Nincs ilyen termek.");
+        if (penztariEsemenyek.getArucikkElsoVasarlsa(arucikkNeve) > 0)
+            System.out.println("Az utolso vasarlas sorszama: " + penztariEsemenyek.getArucikkUtolsoVasarlsa(arucikkNeve));
+        else System.out.println("Nincs ilyen termek.");
+        System.out.println("Eladott darabszam: " + penztariEsemenyek.eladottTermekSzam(arucikkNeve));
+        System.out.println();    
+    }
+    
+    public void feladat6(){
+        System.out.println("6. feladat");
+        System.out.println(darabszam + " darab vetelekor fizetendo: " + penztariEsemenyek.mennyiXDarab(darabszam));
+        System.out.println();    
+    }
+    
+    public void feladat7(){
+        System.out.println("7. feladat");
+        penztariEsemenyek.adottVasrarlasTermekei(vasarlasSorszama);
+        penztariEsemenyek.vasarlasiOsszegekKiirasa();
+    }
+    
 }

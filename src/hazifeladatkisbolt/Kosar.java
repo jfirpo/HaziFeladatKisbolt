@@ -2,31 +2,24 @@ package hazifeladatkisbolt;
 
 import java.util.ArrayList;
 
-public class Kosar {
+public class Kosar implements KosarInterface{
     private ArrayList<Arucikk> arucikkek = new ArrayList<>();
-    private boolean keszVagyok;
-
+   
     public Kosar(){ 
     }
 
-    public ArrayList<Arucikk> getArucikkek() {
+   @Override
+   public ArrayList<Arucikk> getArucikkek() {
         return arucikkek;
     }
-    
-    
+     
+    @Override
     public void kosarbaHelyez(Arucikk arucikk){
-        if (arucikk.getKeszVagyok())
             arucikkek.add(arucikk);
-            ellenorzes();
-    }
-    
-    private void ellenorzes(){
-        if (arucikkek.size()<=20 && arucikkek.size()>0)
-            this.keszVagyok = true;
-        else this.keszVagyok = false;
-    }
-    
-    public boolean getKeszVagyok(){
-        return this.keszVagyok;
+    }    
+
+    @Override
+    public int kosarMerete() {
+        return arucikkek.size();
     }
 }

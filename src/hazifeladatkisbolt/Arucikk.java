@@ -1,26 +1,21 @@
 package hazifeladatkisbolt;
 
+import java.math.BigDecimal;
+
 public class Arucikk {
     private String arucikkNev;
-    private int arucikkAr;
-    private boolean keszVagyok;
-    private String hiba;
+    private BigDecimal arucikkAr;
+    private final BigDecimal ALAPAR = new BigDecimal("500");
     
     public Arucikk(){
     }
     
     public Arucikk(String arucikkNev){
         this.arucikkNev = arucikkNev;
-        this.arucikkAr = 500;
-        setKeszVagyok();
+        this.arucikkAr = ALAPAR;
     }
 
-    public void setArucikkNev(String arucikkNev) {
-        this.arucikkNev = arucikkNev;
-        setKeszVagyok();
-    }
-
-    public void setArucikkAr(int arucikkAr) {
+    public void setArucikkAr(BigDecimal arucikkAr) {
         this.arucikkAr = arucikkAr;
     }
 
@@ -28,24 +23,7 @@ public class Arucikk {
         return arucikkNev;
     }
 
-    public int getArucikkAr() {
+    public BigDecimal getArucikkAr() {
         return arucikkAr;
-    }
-    
-    private void setKeszVagyok(){
-        if (this.arucikkNev.length()>0 && this.arucikkNev.length()<=20)
-            this.keszVagyok = true;
-        else hiba = "Nem megfelelo az arucikk neve, a peldanyt nem helyezheto a kosarba ";
-    }
-
-    public boolean getKeszVagyok(){
-        return this.keszVagyok;
-    }
-    
-    public String getHiba() {
-        return hiba;
-    }
-    
-    
-    
+    }    
 }

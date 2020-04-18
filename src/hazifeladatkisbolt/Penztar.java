@@ -1,59 +1,60 @@
 package hazifeladatkisbolt;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Penztar {
-    private Kosar kosar;
-    private int vegosszeg;
+    private KosarInterface kosar = new Kosar();
     private ArrayList<Arucikk> szamla = new ArrayList<>();
-    private boolean tortentFizetes;
+    private Map<String, Integer> termekek = new HashMap<>();
     
     private Penztar(){};
     
-    public Penztar(Kosar kosar){
-        if (kosar.getKeszVagyok()){
-            this.kosar = kosar;
-            setVegosszeg();
-            this.tortentFizetes = true;
-        }
+    public Penztar(KosarInterface kosar){
+        this.kosar = kosar;
+        setTermekek(kosar);
     }
 
-    public Kosar getKosar() {
+    public KosarInterface getKosar() {
         return kosar;
     }
 
-    public int getVegosszeg() {
+    public BigDecimal getVegosszeg() {
+        BigDecimal vegosszeg = new BigDecimal(0);
+        for(Map.Entry<String, Integer> termek : termekek.entrySet()) {
+           int j = termek.getValue();                    
+           BigDecimal ertek ;
+            ertek = mennybeKerulXDarab(j);
+           vegosszeg = vegosszeg.add(ertek);
+        }
         return vegosszeg;
     }
-  
-    private void setVegosszeg(){
-        for (int i = 0; i < kosar.getArucikkek().size(); i++){
-            int darabszam = 1;
-            for (int j = 0; j < szamla.size(); j++)
-                if (szamla.get(j).getArucikkNev().equals(kosar.getArucikkek().get(i).getArucikkNev())) darabszam++;
-            if (darabszam > 1)
-                if (darabszam == 2) kosar.getArucikkek().get(i).setArucikkAr(450);
-                    else kosar.getArucikkek().get(i).setArucikkAr(400);
-        szamla.add(kosar.getArucikkek().get(i));        
-            vegosszeg += szamla.get(i).getArucikkAr();
+    
+    public void kosartartalmaMegjelenitoMap(){
+          System.out.println(this.termekek);
+    }    
+
+    private void setTermekek(KosarInterface kosar) {
+        for (Arucikk termek : kosar.getArucikkek()){            
+            if (termekek.containsKey(termek.getArucikkNev())){
+                termekek.put(termek.getArucikkNev(), 1+termekek.get(termek.getArucikkNev()));
+            }   else{
+                    termekek.put(termek.getArucikkNev(), 1);
+                }                        
         }
+
     }
     
-    public void kosartartalmaMegjelenito(){
-        ArrayList<String> kosarbanLevoTermekek = new ArrayList<>();
-        for (int i = 0; i < szamla.size(); i++) {
-            if(!kosarbanLevoTermekek.contains(szamla.get(i).getArucikkNev()))
-                kosarbanLevoTermekek.add(szamla.get(i).getArucikkNev());
+    public  static BigDecimal mennybeKerulXDarab(int darabszam){
+        BigDecimal ar = new BigDecimal(0);
+        for (int i = 1; i <= darabszam; i++){
+            if(i == 1)ar = ar.add(new BigDecimal(500));
+            if(i == 2)ar = ar.add(new BigDecimal(450));
+            if(i > 2) ar = ar.add(new BigDecimal(400));
         }
-        int i;
-        for (String kosarbanLevoTermekek1 : kosarbanLevoTermekek) {            
-            i = 0;
-            for (Arucikk szamla1 : szamla) {
-                if(kosarbanLevoTermekek1.equals(szamla1.getArucikkNev()))
-                    i++;
-            }
-            System.out.println(i +" " + kosarbanLevoTermekek1);
-        }
-    }
+        
+        return ar;
+    }        
 }

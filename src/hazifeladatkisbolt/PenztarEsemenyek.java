@@ -5,23 +5,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PenztarEsemenyek {
+public class PenztarEsemenyek implements PenztariEsemenykezelo{
     private Arucikk aru;
-    private Kosar kosar = new Kosar();
+    private KosarInterface kosar = new Kosar();
     private Penztar vasarlas;
     private ArrayList<Penztar> penztarNaplo = new ArrayList<>();
     private Scanner lemezOlvaso;
-    private String hiba;
-    private boolean keszVagyok;
     
     public PenztarEsemenyek() {
-            setKeszVagyok();
-        if (keszVagyok){
             try {
                 lemezOlvaso = new Scanner(new File("penztar.txt"));
             do{        
@@ -42,26 +39,14 @@ public class PenztarEsemenyek {
             lemezOlvaso.close();
             } catch (FileNotFoundException ex) {                
             }
-        } 
     }
-
-    public boolean getKeszVagyok(){
-        return keszVagyok;
-    }
-
-    public String hiba(){
-        return this.hiba;
-    }
-    
-    public ArrayList<Penztar> getPenztarNaplo() {
-        return penztarNaplo;
-    }
-    
+     
+    @Override
     public int getArucikkElsoVasarlsa(String keresettArucikkNev){
         int vasarlasSzama = 0, j = 0, lefutas = 0;
         String vizsgaltArucikkNev = "";
         do{    
-            while(j < penztarNaplo.get(vasarlasSzama).getKosar().getArucikkek().size()){
+            while(j < penztarNaplo.get(vasarlasSzama).getKosar().kosarMerete()){
                 if (keresettArucikkNev.equals(penztarNaplo.get(vasarlasSzama).getKosar().getArucikkek().get(j).getArucikkNev()))
                     vizsgaltArucikkNev = keresettArucikkNev;                    
                 j++;
@@ -75,6 +60,7 @@ public class PenztarEsemenyek {
         else return 0;
     }
     
+    @Override
     public int getArucikkUtolsoVasarlsa(String keresettArucikkNev){
         int vasarlasSzama = penztarNaplo.size()-1, j = 0, lefutas = 0;
         String vizsgaltArucikkNev = "";
@@ -93,6 +79,7 @@ public class PenztarEsemenyek {
         else return 0;
     }
     
+    @Override
     public int eladottTermekSzam(String arucikkNev){
         int eladottTermekszam = 0;
         for (int i = 0; i < penztarNaplo.size();i++){   
@@ -104,49 +91,23 @@ public class PenztarEsemenyek {
         return eladottTermekszam;    
     }
     
+    @Override
     public void adottVasrarlasTermekei(int vasarlasSorszama){
         if (vasarlasSorszama > 0 && vasarlasSorszama < penztarNaplo.size())
-            penztarNaplo.get(--vasarlasSorszama).kosartartalmaMegjelenito();
+            penztarNaplo.get(--vasarlasSorszama).kosartartalmaMegjelenitoMap();
         else System.out.println("Nincs ilyen szamu vasarlas");
     }
-
-    public int mennybeKerulXDarab(int darabszam){
-        int ar = 0;
-        for (int i = 1; i <= darabszam; i++){
-            if(i == 1) ar += 500;
-            if(i == 2) ar += 450;
-            if(i > 2)  ar += 400;
-        }
         
-        return ar;
-    }    
-        
-    public void setKeszVagyok() {
-        int sor = 0;
-        try {            
-            lemezOlvaso = new Scanner(new File("penztar.txt"));
-            do{        
-                    lemezOlvaso.nextLine();
-                    sor++;
-                } while(lemezOlvaso.hasNext());
-            lemezOlvaso.close();
-            if(sor <= 1000)    
-             this.keszVagyok = true;
-            else hiba = "Tul sok a sor a fileban";
-        } catch (FileNotFoundException ex) {           
-            hiba = "Nincs meg a file.";
-        }        
-    } 
-
+    @Override
     public void vasarlasiOsszegekKiirasa(){
         try {
             BufferedWriter iro = new BufferedWriter(new FileWriter("osszeg.txt"));
             int i = 1;
             String sor;
             for (Penztar fizetes : penztarNaplo){
-                sor = Integer.toString(++i);
+                sor = Integer.toString(i++);
                 sor += ": ";
-                sor += Integer.toString(fizetes.getVegosszeg());
+                sor += fizetes.getVegosszeg().toString();
                 iro.write(sor);
                 iro.newLine();
                 iro.flush();
@@ -155,5 +116,20 @@ public class PenztarEsemenyek {
         } catch (IOException ex) {
             Logger.getLogger(PenztarEsemenyek.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    @Override
+    public int vasarlasOsszesen(){
+        return this.penztarNaplo.size();
+    }
+
+    @Override
+    public int megadottVasarlasKosarMeret(int vasarlasSzama) {
+        return penztarNaplo.get(--vasarlasSzama).getKosar().kosarMerete();
+    }
+
+    @Override
+    public BigDecimal mennyiXDarab(int darabszam) {
+        return Penztar.mennybeKerulXDarab(darabszam);
     }
 }
