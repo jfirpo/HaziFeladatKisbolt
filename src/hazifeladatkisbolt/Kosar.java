@@ -3,7 +3,7 @@ package hazifeladatkisbolt;
 import java.util.ArrayList;
 
 public class Kosar implements KosarInterface{
-    private ArrayList<Arucikk> arucikkek = new ArrayList<>();
+    private final ArrayList<Arucikk> arucikkek = new ArrayList<>();
    
     public Kosar(){ 
     }

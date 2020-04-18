@@ -1,26 +1,27 @@
 package hazifeladatkisbolt;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Penztar {
+public class Penztar implements PenztarInterface{
     private KosarInterface kosar = new Kosar();
-    private ArrayList<Arucikk> szamla = new ArrayList<>();
-    private Map<String, Integer> termekek = new HashMap<>();
+    private Map<String, Integer> termekek;
     
     private Penztar(){};
     
     public Penztar(KosarInterface kosar){
+        termekek = new HashMap<>();
         this.kosar = kosar;
         setTermekek(kosar);
     }
 
+    @Override
     public KosarInterface getKosar() {
         return kosar;
     }
 
+    @Override
     public BigDecimal getVegosszeg() {
         BigDecimal vegosszeg = new BigDecimal(0);
         for(Map.Entry<String, Integer> termek : termekek.entrySet()) {
@@ -32,6 +33,7 @@ public class Penztar {
         return vegosszeg;
     }
     
+    @Override
     public void kosartartalmaMegjelenitoMap(){
           System.out.println(this.termekek);
     }    

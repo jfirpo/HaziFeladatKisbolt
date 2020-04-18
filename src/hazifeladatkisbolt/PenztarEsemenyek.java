@@ -15,7 +15,7 @@ public class PenztarEsemenyek implements PenztariEsemenykezelo{
     private Arucikk aru;
     private KosarInterface kosar = new Kosar();
     private Penztar vasarlas;
-    private ArrayList<Penztar> penztarNaplo = new ArrayList<>();
+    private ArrayList<PenztarInterface> penztarNaplo = new ArrayList<>();
     private Scanner lemezOlvaso;
     
     public PenztarEsemenyek() {
@@ -104,7 +104,7 @@ public class PenztarEsemenyek implements PenztariEsemenykezelo{
             BufferedWriter iro = new BufferedWriter(new FileWriter("osszeg.txt"));
             int i = 1;
             String sor;
-            for (Penztar fizetes : penztarNaplo){
+            for (PenztarInterface fizetes : penztarNaplo){
                 sor = Integer.toString(i++);
                 sor += ": ";
                 sor += fizetes.getVegosszeg().toString();
