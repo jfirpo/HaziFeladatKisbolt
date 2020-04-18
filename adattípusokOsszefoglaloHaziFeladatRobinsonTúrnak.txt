@@ -1,0 +1,44 @@
+Primitiv változók 
+8db van összesen
+
+Egesz primitivek:
+
+Megnevezés	Értéktartomány		Memória igény	Kezdőérték
+byte		-128 	- 127		1Byte			0
+short		-32768	- 32767		2Byte			0
+int			-2Mrd 	- 2Mrd		4Byte			0
+long		-9 és +9 Kvintillió	8Byte			0
+
+Tört primitívek:
+
+float							4Byte			0.0f
+double							8Byte			0.0d
+
+Érdemes mindig a legkisebb memóriát foglaló váltózót használni, a várt adataink függvényében.
+
+Nem szám primitívek
+
+char		1 karaktert tárol	2Byte			\u0000
+boolean		true/false							false
+
+
+Objektumok - összetett adattípusok
+Rengeteg van belőlük
+
+String		null
+Array		null
+...
+
+Wrapper classes - csomagoló adattípusok: Character, Boolean, Byte, Short, Integer, Long, Float, Double
+
+A primitív változók nem objektumok, azért hogy a primitív típusú adatainkat objektumokként kezelhessük, van a javaban minden primitív változóhoz
+egy-egy úgynevezett csomagoló(wrapper) osztály, mely a megfelelő típusú adatunkat becsomagolja, így objektumként használhatjuk a továbbiakban.
+Például egy ArrayList kollekció, nem kezel primitíveket, a wrapper osztályok használatával viszont áthidalható ez a probléma.
+A csomagoló osztályok példányai változtathatatlanok, állapotuk életük végéig az marad, amit inicializáláskor megadtunk.
+
+felhasznált források:
+1:https://www.youtube.com/watch?v=yZlQq2sAsmM
+2:http://www.petrik.hu/files/Tananyagtar/KOVACS_HENRIETTE/35/Elmelet/Csomagolo_osztalyok.pdf
+
+Füredi Krisztián - Házi Feladat
+
