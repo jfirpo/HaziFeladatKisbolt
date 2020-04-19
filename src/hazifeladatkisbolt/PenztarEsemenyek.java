@@ -19,6 +19,7 @@ public class PenztarEsemenyek implements PenztariEsemenykezelo{
     private Scanner lemezOlvaso;
     
     public PenztarEsemenyek() {
+            String vasarlasVege = "F";
             try {
                 lemezOlvaso = new Scanner(new File("penztar.txt"));
             do{        
@@ -28,11 +29,11 @@ public class PenztarEsemenyek implements PenztariEsemenykezelo{
                 kosar = new Kosar();
                 do{
                     sor = lemezOlvaso.nextLine();                             
-                    if(!sor.equals("F")) {
+                    if(!sor.equals(vasarlasVege)) {
                         aru = new Arucikk(sor);
                         kosar.kosarbaHelyez(aru);
                     }    
-                } while(!sor.equals("F"));                    
+                } while(!sor.equals(vasarlasVege));                    
                 vasarlas = new Penztar(kosar);                
                 penztarNaplo.add(vasarlas);                
             } while(lemezOlvaso.hasNext());
