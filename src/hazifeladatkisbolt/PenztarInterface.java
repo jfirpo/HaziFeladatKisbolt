@@ -1,20 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hazifeladatkisbolt;
 
 import java.math.BigDecimal;
 
-/**
- *
- * @author Krisztián
- */
 public interface PenztarInterface {
         KosarInterface getKosar();
-        BigDecimal getVegosszeg();
+        BigDecimal vasarlasVegosszege();
         void kosartartalmaMegjelenitoMap();
+        int kosarMerete();
+        boolean vanXtermekakosarban(String xTermekNev);
+        int hanyDarabXTermekVanAKosarban(String xTermekNev);
+
         static BigDecimal mennybeKerulXDarab(int darabszam){
                BigDecimal ar = new BigDecimal(0);
              for (int i = 1; i <= darabszam; i++){

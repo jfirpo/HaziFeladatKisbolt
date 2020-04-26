@@ -8,18 +8,22 @@ public class Kosar implements KosarInterface{
     public Kosar(){ 
     }
 
-   @Override
-   public ArrayList<Arucikk> getArucikkek() {
+    @Override
+    public ArrayList<Arucikk> getArucikkek() {
         return arucikkek;
     }
      
     @Override
     public void kosarbaHelyez(Arucikk arucikk){
-            arucikkek.add(arucikk);
+        arucikkek.add(arucikk);
     }    
-
     @Override
     public int kosarMerete() {
         return arucikkek.size();
+    }
+
+    @Override
+    public void kosarbolKivesz(Arucikk arucikk) {
+       arucikkek.remove(arucikk);
     }
 }
