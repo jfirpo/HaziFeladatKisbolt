@@ -3,7 +3,7 @@ package hazifeladatkisbolt;
 import java.util.Scanner;
 
 public class FeladatokKezelese {
-    private PenztariEsemenykezelo penztariEsemenyek = new PenztarEsemenyek();;    
+    private PenztarEsemenyek penztariEsemenyek = new PenztarEsemenyek();;    
     private Scanner keyboardReader = new Scanner(System.in);                                    // a 4. feladat bekeres penztariEsemenyekldanya es valtozoi
     private int vasarlasSorszama = 2;
     private String arucikkNeve = "colostok";

@@ -7,15 +7,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PenztarEsemenyek implements PenztariEsemenykezelo{
+public class PenztarEsemenyek{
     private Arucikk aru;
-    private KosarInterface kosar = new Kosar();
+    private Kosar kosar = new Kosar();
     private Penztar vasarlas;
-    private final ArrayList<PenztarInterface> penztarNaplo = new ArrayList<>();
+    private List<Penztar> penztarNaplo = new ArrayList();
     private Scanner lemezOlvaso;
     private final String URESSTRING = "";
     
@@ -23,7 +24,6 @@ public class PenztarEsemenyek implements PenztariEsemenykezelo{
         penztarMemoriaBetoltese();
     }
      
-    @Override
     public int getArucikkElsoVasarlsa(String keresettArucikkNev){
         for (int i = 0; i < penztarNaplo.size(); i++){
             if (penztarNaplo.get(i).vanXtermekakosarban(keresettArucikkNev))
@@ -32,7 +32,6 @@ public class PenztarEsemenyek implements PenztariEsemenykezelo{
         return 0;
     }
 
-    @Override
     public int getArucikkUtolsoVasarlsa(String keresettArucikkNev){
         for (int i = penztarNaplo.size()-1; i != 0; i--){
             if (penztarNaplo.get(i).vanXtermekakosarban(keresettArucikkNev))
@@ -41,23 +40,20 @@ public class PenztarEsemenyek implements PenztariEsemenykezelo{
         return 0;
     }
         
-    @Override
     public int eladottTermekSzam(String arucikkNev){
         int osszesenEladottTermekszam = 0;
-        for(PenztarInterface eladas : penztarNaplo){
+        for(Penztar eladas : penztarNaplo){
             osszesenEladottTermekszam += eladas.hanyDarabXTermekVanAKosarban(arucikkNev);
         }
         return osszesenEladottTermekszam;
     }    
 
-    @Override
     public void adottVasrarlasTermekei(int vasarlasSorszama){
         if (vasarlasSorszama > 0 && vasarlasSorszama < penztarNaplo.size())
             penztarNaplo.get(--vasarlasSorszama).kosartartalmaMegjelenitoMap();
         else System.out.println("Nincs ilyen szamu vasarlas");
     }
         
-    @Override
     public void vasarlasiOsszegekKiirasa(){
         try {
             eladasokFilebaIrasa();
@@ -71,7 +67,7 @@ public class PenztarEsemenyek implements PenztariEsemenykezelo{
             BufferedWriter iro = new BufferedWriter(new FileWriter("osszeg.txt"));
             int i = 1;
             String sor;
-            for (PenztarInterface fizetes : penztarNaplo){
+            for (Penztar fizetes : penztarNaplo){
                 sor = Integer.toString(i++);
                 sor += ": ";
                 sor += fizetes.vasarlasVegosszege().toString();
@@ -81,17 +77,14 @@ public class PenztarEsemenyek implements PenztariEsemenykezelo{
             }
     }
     
-    @Override
     public int vasarlasOsszesen(){
         return this.penztarNaplo.size();
     }
 
-    @Override
     public int megadottVasarlasKosarMeret(int vasarlasSzama) {
         return penztarNaplo.get(--vasarlasSzama).kosarMerete();
     }
 
-    @Override
     public BigDecimal mennyiXDarab(int darabszam) {
         return Penztar.mennybeKerulXDarab(darabszam);
     }

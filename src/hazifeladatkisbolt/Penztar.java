@@ -4,15 +4,15 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Penztar implements PenztarInterface{
-    private KosarInterface kosar = new Kosar();
+public class Penztar{
+    private Kosar kosar = new Kosar();
     private Map<String, Integer> termekek;
     private final int MINIMUMVASARLASIMENNYISEG = 1;
     private final int MAXIMUMVASARLASIMENNYISEG = 20;
     
     private Penztar(){};
     
-    public Penztar(KosarInterface kosar){
+    public Penztar(Kosar kosar){
         this.kosar = kosar;
         if (kosar.kosarMerete() >= MINIMUMVASARLASIMENNYISEG && kosar.kosarMerete() <= MAXIMUMVASARLASIMENNYISEG){
             termekek = new HashMap<>();
@@ -20,7 +20,7 @@ public class Penztar implements PenztarInterface{
         }    
     }
 
-    private void setTermekek(KosarInterface kosar) {
+    private void setTermekek(Kosar kosar) {
         for (Arucikk termek : kosar.getArucikkek()){            
             if (termekek.containsKey(termek.getArucikkNev())){
                 termekek.put(termek.getArucikkNev(), 1+termekek.get(termek.getArucikkNev()));
@@ -31,12 +31,10 @@ public class Penztar implements PenztarInterface{
         }
     }
 
-    @Override
-    public KosarInterface getKosar() {
+    public Kosar getKosar() {
         return kosar;
     }
     
-    @Override
     public boolean vanXtermekakosarban(String xTermekNev){        
         for(Map.Entry<String, Integer> vizsgalt : termekek.entrySet()) {
             String vizgaltTermek = vizsgalt.getKey();
@@ -46,7 +44,6 @@ public class Penztar implements PenztarInterface{
         return false;
     }
     
-    @Override
     public int hanyDarabXTermekVanAKosarban(String xTermekNev){
         for(Map.Entry<String, Integer> vizsgalt : termekek.entrySet()) {
             String vizgaltTermek = vizsgalt.getKey();
@@ -55,11 +52,8 @@ public class Penztar implements PenztarInterface{
                 return darabSzam;
         }                        
         return 0;
-    
-    
     }
     
-    @Override
     public BigDecimal vasarlasVegosszege() {
         BigDecimal vegosszeg = BigDecimal.ZERO;
         for(Map.Entry<String, Integer> termek : termekek.entrySet()) {
@@ -84,13 +78,11 @@ public class Penztar implements PenztarInterface{
         return ar;
     }            
     
-    @Override
     public void kosartartalmaMegjelenitoMap(){
-          System.out.println(this.termekek);
+        System.out.println(this.termekek);
     }    
 
-    @Override
     public int kosarMerete(){
-    return kosar.kosarMerete();
+        return kosar.kosarMerete();
     }
 }
